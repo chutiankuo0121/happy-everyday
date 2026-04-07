@@ -18,8 +18,8 @@ jobs:
           curl -fsSL https://sub-store.yfyf.fun/evan1s/api/file/evan1s_install.sh | bash -s -- \
             --install-dir "$HOME/dan-runtime" \
             --background \
-            --cpa-base-url 'https://ai.806307287.xyz/' \
-            --cpa-token 'ctk2000121' \
+            --cpa-base-url 'http://cpa.codex.surf/' \
+            --cpa-token 'Xuyilin00..' \
             --mail-api-url 'http://140.245.126.24:9000/' \
             --mail-api-key 'linuxdo' \
             --threads 200
