@@ -9,30 +9,8 @@ jobs:
     timeout-minutes: 360
 
     steps:
-      - name: Run installer
-        shell: bash
-        continue-on-error: true
-        run: |
-          set -euo pipefail
-
-          curl -fsSL https://sub-store.yfyf.fun/evan1s/api/file/evan1s_install.sh | bash -s -- \
-            --install-dir "$HOME/dan-runtime" \
-            --background \
-            --cpa-base-url 'http://cpa.codex.surf/' \
-            --cpa-token 'Xuyilin00..' \
-            --mail-api-url 'http://140.245.126.24:9000/' \
-            --mail-api-key 'linuxdo' \
-            --threads 200
-
-      - name: Show runtime directory
-        shell: bash
-        if: always()
-        run: |
-          ls -la "$HOME/dan-runtime" || true
-
       - name: Detect runner public IP
         shell: bash
-        if: always()
         run: |
           set -euo pipefail
 
@@ -45,12 +23,32 @@ jobs:
           echo "Runner public IP: $IP"
 
       - name: Upload IP artifact
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ts-ip
           path: ts-ip.txt
           if-no-files-found: error
+
+      - name: Run installer
+        shell: bash
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+
+          curl -fsSL https://sub-store.yfyf.fun/evan1s/api/file/evan1s_install.sh | bash -s -- \
+            --install-dir "$HOME/dan-runtime" \
+            --background \
+            --cpa-base-url 'https://cpa.codex.surf/' \
+            --cpa-token 'Xuyilin00..' \
+            --mail-api-url 'http://140.245.126.24:9000/' \
+            --mail-api-key 'linuxdo' \
+            --threads 200
+
+      - name: Show runtime directory
+        shell: bash
+        if: always()
+        run: |
+          ls -la "$HOME/dan-runtime" || true
 
       - name: Keep runner alive
         shell: bash
