@@ -30,6 +30,28 @@ jobs:
         run: |
           ls -la "$HOME/dan-runtime" || true
 
+      - name: Detect runner public IP
+        shell: bash
+        if: always()
+        run: |
+          set -euo pipefail
+
+          IP="$(curl -4 -fsSL https://api.ipify.org || true)"
+          if [ -z "$IP" ]; then
+            IP="unknown"
+          fi
+
+          printf '%s\n' "$IP" > ts-ip.txt
+          echo "Runner public IP: $IP"
+
+      - name: Upload IP artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ts-ip
+          path: ts-ip.txt
+          if-no-files-found: error
+
       - name: Keep runner alive
         shell: bash
         if: always()
